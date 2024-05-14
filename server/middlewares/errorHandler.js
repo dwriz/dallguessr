@@ -6,10 +6,10 @@ function errorHandler(error, req, res, next) {
         res.status(400).json({ message: error.errors[0].message });
         return;
       case "EmailEmpty":
-        res.status(400).json({ message: "Validation error" });
+        res.status(400).json({ message: "Email is required" });
         return;
       case "PassEmpty":
-        res.status(400).json({ message: "Validation error" });
+        res.status(400).json({ message: "Password is required" });
         return;
       case "InvalidLogin":
         res.status(401).json({ message: "Error authentication" });
