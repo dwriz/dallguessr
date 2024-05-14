@@ -1,10 +1,13 @@
-const { openAI } = require("../helpers/openai.js");
+const { createImagePrompts, createImageUrl } = require("../helpers/openai.js");
 
 class GameController {
   static async createRoom(req, res, next) {
     try {
-      let responseOpenAI = await openAI();
-      res.send(responseOpenAI)
+      let prompts = await createImagePrompts();
+      console.log(prompts);
+      let imageUrl = await createImageUrl(prompts[3]);
+      console.log(imageUrl);
+      res.send(imageUrl);
     } catch (error) {
       next(error);
     }
