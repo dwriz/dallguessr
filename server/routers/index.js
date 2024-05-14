@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.post("/", async (req, res) => {
   res.send("Hello! This is / route");
 });
 
 router.use(require("./auth.js"));
+router.use(require("./game.js"));
 
 module.exports = router;
