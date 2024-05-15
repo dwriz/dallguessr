@@ -1,5 +1,5 @@
 function errorHandler(error, req, res, next) {
-    console.log(error); // delete before prod
+    console.log(error); // *** CHANGE BEFORE DEPLOY ***
     switch (error.name) {
       case "SequelizeValidationError":
       case "SequelizeUniqueConstraintError":
@@ -22,7 +22,8 @@ function errorHandler(error, req, res, next) {
         res.status(403).json({ message: "Restricted to owner" });
         return;
       default:
-        res.status(500).json({ message: "Internal server error" });
+        // res.status(500).json({ message: "Internal server error" }); // *** CHANGE BEFORE DEPLOY ***
+        res.send(error)
         return;
     }
   }
