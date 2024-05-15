@@ -11,12 +11,12 @@ class GameController {
       console.log("======= raw prompts =======");
 
       const prompts = JSON.parse(promptsRaw);
-      
+
       console.log(prompts);
       console.log("======= processed prompts =======");
 
       const room = await Room.create({
-        UserId: req.params.id,
+        UserId: req.params.UserId,
         prompt1: prompts[0],
         prompt2: prompts[1],
         prompt3: prompts[2],
@@ -33,6 +33,20 @@ class GameController {
       await room.update({ imgUrl: cloudinaryUrl.secure_url });
 
       res.status(200).json(room);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async dashboard(req, res, next) {
+    try {
+      const rooms = await Room.findAll({
+        where: {
+          UserId: req.params.UserId,
+        },
+      });
+
+      res.status(200).json(rooms);
     } catch (error) {
       next(error);
     }

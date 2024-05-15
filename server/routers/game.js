@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { GameController } = require("../controllers/gameController.js");
 
-router.post("/user/:id/add-room", GameController.createRoom);
+router.post("/user/:UserId/add-room", GameController.createRoom);
+router.get("/user/:UserId/rooms", GameController.dashboard);
 
 module.exports = router;
