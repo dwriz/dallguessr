@@ -26,19 +26,13 @@ class UserController {
   static async register(req, res, next) {
     try {
       const { email, password, username } = req.body;
+      
       const user = await User.create({
         email: email,
         password: password,
         username: username,
       });
-      // const newUser = await User.findOne({
-      //   where: {
-      //     email: req.body.email,
-      //   },
-      //   attributes: {
-      //     exclude: "password",
-      //   },
-      // });
+
       res.status(201).json(user);
     } catch (error) {
       next(error);
