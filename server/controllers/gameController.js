@@ -38,7 +38,7 @@ class GameController {
     }
   }
 
-  static async dashboard(req, res, next) {
+  static async showDashboard(req, res, next) {
     try {
       const rooms = await Room.findAll({
         where: {
@@ -47,6 +47,20 @@ class GameController {
       });
 
       res.status(200).json(rooms);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async showRoom(req, res, next) {
+    try {
+      let { UserId, RoomId } = req.params;
+      console.log(UserId, "<<<<<<<<<< ini user id");
+      console.log(RoomId, "<<<<<<<<<< ini room id");
+      
+      const room = await Room.findByPk(req.params.RoomId)
+
+      res.status(200).json(room);
     } catch (error) {
       next(error);
     }
