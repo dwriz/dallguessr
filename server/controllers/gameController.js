@@ -97,7 +97,21 @@ class GameController {
     }
   }
 
+  static async deleteRoom(req, res, next) {
+    try {
+      const { RoomId } = req.params;
 
+      const room = await Room.findByPk(RoomId);
+
+      await room.destroy();
+
+      res
+        .status(200)
+        .json({ message: `Room ID ${RoomId} deleted successfully` });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = { GameController };
