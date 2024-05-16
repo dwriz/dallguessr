@@ -29,7 +29,7 @@ class GameController {
 
       await room.update({ imgUrl: cloudinaryUrl.secure_url });
 
-      res.status(200).json({ message: `Room with ID ${room.id} created successfully` });
+      res.status(200).json(room.id);
     } catch (error) {
       next(error);
     }
