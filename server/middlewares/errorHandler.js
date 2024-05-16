@@ -22,7 +22,7 @@ function errorHandler(error, req, res, next) {
         res.status(403).json({ message: "Restricted to owner" });
         return;
       default:
-        // res.status(500).json({ message: "Internal server error" }); // *** CHANGE BEFORE DEPLOY ***
+        res.status(500).json({ message: "Internal server error" }); // *** CHANGE BEFORE DEPLOY ***
         res.send(error)
         return;
     }
