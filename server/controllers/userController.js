@@ -17,6 +17,7 @@ class UserController {
       if (!checkUser) throw { name: "InvalidLogin" };
 
       const token = createToken({ id: user.id });
+      
       res.status(200).json({ token });
     } catch (error) {
       next(error);
