@@ -3,7 +3,9 @@ const {
   createImageUrl,
   rateAnswer,
 } = require("../helpers/openai.js");
-const { cloudinary } = require("../helpers/cloudinary.js");
+// const { cloudinary } = require("../helpers/cloudinary.js");
+const { imagekit } = require("../helpers/imagekit.js");
+
 const { Room } = require("../models/index.js");
 
 class GameController {
@@ -22,14 +24,21 @@ class GameController {
 
       const imageUrl = await createImageUrl(prompts[3]);
 
-      const cloudinaryUrl = await cloudinary.uploader.upload(imageUrl, {
-        folder: "dallguessr",
-        public_id: room.id,
+      // const cloudinaryUrl = await cloudinary.uploader.upload(imageUrl, {
+      //   folder: "dallguessr",
+      //   public_id: room.id,
+      // });
+
+      // await room.update({ imgUrl: cloudinaryUrl.secure_url });
+
+      const imagekitUrl = await imagekit.upload({
+        file: imageUrl,
+        fileName: `dallguessr_${room.id}`,
       });
 
-      await room.update({ imgUrl: cloudinaryUrl.secure_url });
+      await room.update({ imgUrl: imagekitUrl.url });
 
-      res.status(201).json({ message: "Room successfully created" });
+      res.status(201).json(room.id);
     } catch (error) {
       next(error);
     }
@@ -72,7 +81,10 @@ class GameController {
 
       room.update({ answer, accuracyRate });
 
-      res.status(200).json({ message: "answer successfully added, accuracy rate successfuly calculated" });
+      res.status(200).json({
+        message:
+          "answer successfully added, accuracy rate successfuly calculated",
+      });
     } catch (error) {
       next(error);
     }
