@@ -46,7 +46,7 @@ class GameController {
     try {
       const rooms = await Room.findAll({
         where: {
-          UserId: req.params.UserId,
+          UserId: req.user.id,
         },
       });
 
