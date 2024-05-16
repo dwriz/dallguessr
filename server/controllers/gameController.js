@@ -51,11 +51,9 @@ class GameController {
 
   static async showRoom(req, res, next) {
     try {
-      const { UserId, RoomId } = req.params;
-      console.log(UserId, "<<<<<<<<<< ini user id"); // CHANGE BEFORE DEPLOY
-      console.log(RoomId, "<<<<<<<<<< ini room id"); // CHANGE BEFORE DEPLOY
+      const { RoomId } = req.params;
 
-      const room = await Room.findByPk(req.params.RoomId);
+      const room = await Room.findByPk(RoomId);
 
       res.status(200).json(room);
     } catch (error) {
@@ -70,21 +68,11 @@ class GameController {
 
       const room = await Room.findByPk(RoomId);
 
-      console.log(
-        room.dataValues,
-        "<<<<<< this is the the data BEFORE answered"
-      );
-
       const accuracyRate = await rateAnswer(room.finalPrompt, req.body.answer);
 
       room.update({ answer, accuracyRate });
 
-      console.log(
-        room.dataValues,
-        "<<<<<< this is the the data AFTER answered"
-      );
-
-      res.status(200).json({ room });
+      res.status(200).json({ message: "answer successfully added, accuracy rate successfuly calculated" });
     } catch (error) {
       next(error);
     }
