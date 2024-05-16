@@ -1,4 +1,8 @@
-const { createImagePrompts, createImageUrl } = require("../helpers/openai.js");
+const {
+  createImagePrompts,
+  createImageUrl,
+  rateAnswer,
+} = require("../helpers/openai.js");
 const { cloudinary } = require("../helpers/cloudinary.js");
 const { Room } = require("../models/index.js");
 
@@ -7,13 +11,13 @@ class GameController {
     try {
       const promptsRaw = await createImagePrompts();
 
-      console.log(promptsRaw);
-      console.log("======= raw prompts =======");
+      console.log(promptsRaw); // CHANGE BEFORE DEPLOY
+      console.log("======= raw prompts ======="); // CHANGE BEFORE DEPLOY
 
       const prompts = JSON.parse(promptsRaw);
 
-      console.log(prompts);
-      console.log("======= processed prompts =======");
+      console.log(prompts); // CHANGE BEFORE DEPLOY
+      console.log("======= processed prompts ======="); // CHANGE BEFORE DEPLOY
 
       const room = await Room.create({
         UserId: req.params.UserId,
@@ -54,17 +58,46 @@ class GameController {
 
   static async showRoom(req, res, next) {
     try {
-      let { UserId, RoomId } = req.params;
-      console.log(UserId, "<<<<<<<<<< ini user id");
-      console.log(RoomId, "<<<<<<<<<< ini room id");
-      
-      const room = await Room.findByPk(req.params.RoomId)
+      const { UserId, RoomId } = req.params;
+      console.log(UserId, "<<<<<<<<<< ini user id"); // CHANGE BEFORE DEPLOY
+      console.log(RoomId, "<<<<<<<<<< ini room id"); // CHANGE BEFORE DEPLOY
+
+      const room = await Room.findByPk(req.params.RoomId);
 
       res.status(200).json(room);
     } catch (error) {
       next(error);
     }
   }
+
+  static async postAnswer(req, res, next) {
+    try {
+      const { RoomId } = req.params;
+      const { answer } = req.body;
+
+      const room = await Room.findByPk(RoomId);
+
+      console.log(
+        room.dataValues,
+        "<<<<<< this is the the data BEFORE answered"
+      );
+
+      const accuracyRate = await rateAnswer(room.finalPrompt, req.body.answer);
+
+      room.update({ answer, accuracyRate });
+
+      console.log(
+        room.dataValues,
+        "<<<<<< this is the the data AFTER answered"
+      );
+
+      res.status(200).json({ room });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+
 }
 
 module.exports = { GameController };
