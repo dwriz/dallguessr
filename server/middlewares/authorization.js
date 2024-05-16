@@ -2,7 +2,9 @@ const { Room } = require("../models/index.js");
 
 async function authorization(req, res, next) {
   try {
-    const room = await Room.findByPk(req.params.RoomId);
+    const { RoomId } = req.params;
+
+    const room = await Room.findByPk(RoomId);
 
     if (!room) throw { name: "NotFound" };
 
