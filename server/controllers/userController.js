@@ -65,7 +65,7 @@ class UserController {
         username: username,
       });
 
-      res.status(201).json(user);
+      res.status(201).json({ message: "Account successfully created" });
     } catch (error) {
       next(error);
     }
