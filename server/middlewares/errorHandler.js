@@ -25,7 +25,7 @@ function errorHandler(error, req, res, next) {
       res.status(404).json({ message: "Data not found" });
       return;
     default:
-      res.send(error);
+      res.status(500).json(error);
       return;
   }
 }
