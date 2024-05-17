@@ -49,23 +49,35 @@ function DashboardPage() {
 
   return (
     <>
-      <h1>Dashboard</h1>
-      <div className="container">
-        <button onClick={handleLogout} className="btn btn-primary">
-          Logout
-        </button>
-        <Link to="/newgame" className="btn btn-primary">
-          Start New Game
-        </Link>
-        {rooms.map((room, index) => {
-          return (
-            <Card
-              key={index + 1}
-              room={room}
-              handleDelete={() => handleDelete(room.id)}
-            />
-          );
-        })}
+      <div
+        className="container bg-white text-center p-5"
+        style={{ width: "1000px" }}
+      >
+        <div className="container">
+          <button
+            onClick={handleLogout}
+            className="btn"
+            style={{ backgroundColor: "black", color: "green" }}
+          >
+            Logout
+          </button>
+          <Link
+            to="/newgame"
+            className="btn"
+            style={{ backgroundColor: "black", color: "green" }}
+          >
+            Start New Game
+          </Link>
+          {rooms.map((room, index) => {
+            return (
+              <Card
+                key={index + 1}
+                room={room}
+                handleDelete={() => handleDelete(room.id)}
+              />
+            );
+          })}
+        </div>
       </div>
     </>
   );

@@ -8,8 +8,18 @@ function Card({ room, handleDelete }) {
         <div className="card-body">
           <h5 className="card-title"></h5>
           <p className="card-text"></p>
-          <Link to={`/gameDetail/${room.id}`} className="btn btn-primary">Detail</Link>
-          <button className="btn btn-primary" onClick={handleDelete}>
+          <Link
+            to={`/gameDetail/${room.id}`}
+            className="btn"
+            style={{ backgroundColor: "black", color: "green" }}
+          >
+            History
+          </Link>
+          <button
+            className="btn"
+            style={{ backgroundColor: "black", color: "green" }}
+            onClick={handleDelete}
+          >
             Delete
           </button>
         </div>

@@ -36,36 +36,45 @@ function RegisterPage() {
 
   return (
     <>
-      <h1>Register Page</h1>
-      <form autoComplete="off" onSubmit={submitRegister}>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          onChange={handleChangeInput}
-        />
+      <div
+        className="container bg-white text-center p-5"
+        style={{ width: "1000px" }}
+      >
+        <h1>Register Page</h1>
+        <form autoComplete="off" onSubmit={submitRegister}>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            onChange={handleChangeInput}
+          />
 
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          onChange={handleChangeInput}
-        />
+          <label htmlFor="email">Email</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            onChange={handleChangeInput}
+          />
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={handleChangeInput}
-        />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={handleChangeInput}
+          />
 
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="btn"
+            style={{ backgroundColor: "black", color: "green" }}
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </>
   );
 }

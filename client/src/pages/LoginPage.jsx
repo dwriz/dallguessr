@@ -64,10 +64,10 @@ function LoginPage() {
         callback: handleCredentialResponse,
       });
 
-      google.accounts.id.renderButton(
-        document.getElementById("buttonDiv"),
-        { theme: "outline", size: "large" }
-      );
+      google.accounts.id.renderButton(document.getElementById("buttonDiv"), {
+        theme: "outline",
+        size: "large",
+      });
 
       google.accounts.id.prompt();
     };
@@ -75,30 +75,35 @@ function LoginPage() {
 
   return (
     <>
-      <h1>Login Page</h1>
-      <form autoComplete="off" onSubmit={submitLogin}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          onChange={handleChangeInput}
-        />
+      <div
+        className="container bg-white text-center p-5"
+        style={{ width: "1000px" }}
+      >
+        <h1>Login</h1>
+        <form autoComplete="off" onSubmit={submitLogin}>
+          <label htmlFor="email" className="mt-4">Email</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            onChange={handleChangeInput}
+          />
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          onChange={handleChangeInput}
-        />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            onChange={handleChangeInput}
+          />
 
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
-        {/* <button>Ini google login</button> */}
-        <div id="buttonDiv"></div>
-      </form>
+          <button type="submit" className="btn" style={{ backgroundColor: "black", color: "green" }}>
+            Submit
+          </button>
+          {/* <button>Ini google login</button> */}
+          <div id="buttonDiv"></div>
+        </form>
+      </div>
     </>
   );
 }

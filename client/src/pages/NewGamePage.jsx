@@ -90,20 +90,29 @@ function NewGamePage() {
 
   return (
     <>
-      <h1>NEW GAME PAGE</h1>
-      <img src={roomData.imgUrl} style={{ height: "300px" }} />
-      <form autoComplete="off" onSubmit={submitLogin}>
-        <label htmlFor="answer">Answer here:</label>
-        <input
-          type="text"
-          id="answer"
-          name="answer"
-          onChange={handleChangeInput}
-        />
-        <button type="submit" className="btn btn-primary">
-          Submit Answer
-        </button>
-      </form>
+      <div
+        className="container bg-white text-center p-5"
+        style={{ width: "1000px" }}
+      >
+        <p>
+          Skynet has gone sentient. It challenged you to answer his challenge.
+          The AI will generate an image, and you will describe what it's about
+        </p>
+        <p>If your accuracy is below 50 %, Skynet will blow up the world.</p>
+        <img src={roomData.imgUrl} style={{ height: "300px" }} />
+        <form autoComplete="off" onSubmit={submitLogin}>
+          <label htmlFor="answer">Answer here:</label>
+          <input
+            type="text"
+            id="answer"
+            name="answer"
+            onChange={handleChangeInput}
+          />
+          <button type="submit" className="btn" style={{ backgroundColor: "black", color: "green" }}>
+            Submit answer
+          </button>
+        </form>
+      </div>
     </>
   );
 }
