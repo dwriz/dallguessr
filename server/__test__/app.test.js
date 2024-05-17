@@ -105,8 +105,7 @@ describe("POST /room/add", () => {
     const { body, status } = response;
 
     expect(status).toBe(201);
-    expect(body).toBeInstanceOf(Object);
-    expect(body).toHaveProperty("message", "Room successfully created");
+    expect(typeof body).toBe("number")
   }, 30000);
 });
 
