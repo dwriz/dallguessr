@@ -4,7 +4,8 @@ function LandingPage() {
   return (
     <>
     <h1>Landing Page</h1>
-    <Link to="/login"><button>Login</button></Link>
+    <Link to="/login" className="btn btn-primary">Login</Link>
+    <Link to="/register" className="btn btn-primary">Register</Link>
     </>
   )
 }

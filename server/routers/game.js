@@ -3,10 +3,13 @@ const router = express.Router();
 
 const { GameController } = require("../controllers/gameController.js");
 
-router.post("/user/:UserId/add-room", GameController.createRoom);
-router.get("/user/:UserId/rooms", GameController.showDashboard);
-router.get("/user/:UserId/rooms/:RoomId", GameController.showRoom);
-router.put("/user/:UserId/rooms/:RoomId", GameController.postAnswer);
-router.delete("/user/:UserId/rooms/:RoomId", GameController.deleteRoom);
+router.post("/room/add", GameController.createRoom);
+router.get("/room/all", GameController.showDashboard);
+
+const { authorization } = require("../middlewares/authorization.js");
+
+router.get("/room/:RoomId", authorization, GameController.showRoom);
+router.put("/room/:RoomId", authorization, GameController.postAnswer);
+router.delete("/room/:RoomId", authorization, GameController.deleteRoom);
 
 module.exports = router;

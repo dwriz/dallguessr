@@ -3,24 +3,19 @@ const {
   createImageUrl,
   rateAnswer,
 } = require("../helpers/openai.js");
-const { cloudinary } = require("../helpers/cloudinary.js");
+// const { cloudinary } = require("../helpers/cloudinary.js");
+const { imagekit } = require("../helpers/imagekit.js");
+
 const { Room } = require("../models/index.js");
 
 class GameController {
   static async createRoom(req, res, next) {
     try {
       const promptsRaw = await createImagePrompts();
-
-      console.log(promptsRaw); // CHANGE BEFORE DEPLOY
-      console.log("======= raw prompts ======="); // CHANGE BEFORE DEPLOY
-
       const prompts = JSON.parse(promptsRaw);
 
-      console.log(prompts); // CHANGE BEFORE DEPLOY
-      console.log("======= processed prompts ======="); // CHANGE BEFORE DEPLOY
-
       const room = await Room.create({
-        UserId: req.params.UserId,
+        UserId: req.user.id,
         prompt1: prompts[0],
         prompt2: prompts[1],
         prompt3: prompts[2],
@@ -29,14 +24,21 @@ class GameController {
 
       const imageUrl = await createImageUrl(prompts[3]);
 
-      const cloudinaryUrl = await cloudinary.uploader.upload(imageUrl, {
-        folder: "dallguessr",
-        public_id: room.id,
+      // const cloudinaryUrl = await cloudinary.uploader.upload(imageUrl, {
+      //   folder: "dallguessr",
+      //   public_id: room.id,
+      // });
+
+      // await room.update({ imgUrl: cloudinaryUrl.secure_url });
+
+      const imagekitUrl = await imagekit.upload({
+        file: imageUrl,
+        fileName: `dallguessr_${room.id}`,
       });
 
-      await room.update({ imgUrl: cloudinaryUrl.secure_url });
+      await room.update({ imgUrl: imagekitUrl.url });
 
-      res.status(200).json(room);
+      res.status(201).json(room.id);
     } catch (error) {
       next(error);
     }
@@ -46,7 +48,7 @@ class GameController {
     try {
       const rooms = await Room.findAll({
         where: {
-          UserId: req.params.UserId,
+          UserId: req.user.id,
         },
       });
 
@@ -58,11 +60,9 @@ class GameController {
 
   static async showRoom(req, res, next) {
     try {
-      const { UserId, RoomId } = req.params;
-      console.log(UserId, "<<<<<<<<<< ini user id"); // CHANGE BEFORE DEPLOY
-      console.log(RoomId, "<<<<<<<<<< ini room id"); // CHANGE BEFORE DEPLOY
+      const { RoomId } = req.params;
 
-      const room = await Room.findByPk(req.params.RoomId);
+      const room = await Room.findByPk(RoomId);
 
       res.status(200).json(room);
     } catch (error) {
@@ -77,21 +77,14 @@ class GameController {
 
       const room = await Room.findByPk(RoomId);
 
-      console.log(
-        room.dataValues,
-        "<<<<<< this is the the data BEFORE answered"
-      );
-
       const accuracyRate = await rateAnswer(room.finalPrompt, req.body.answer);
 
       room.update({ answer, accuracyRate });
 
-      console.log(
-        room.dataValues,
-        "<<<<<< this is the the data AFTER answered"
-      );
-
-      res.status(200).json({ room });
+      res.status(200).json({
+        message:
+          "answer successfully added, accuracy rate successfuly calculated",
+      });
     } catch (error) {
       next(error);
     }

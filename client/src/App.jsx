@@ -8,6 +8,8 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
+import NewGamePage from "./pages/NewGamePage";
+import GameDetailPage from "./pages/GameDetailPage";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardPage />,
+  },
+  {
+    path: "/newgame",
+    element: <NewGamePage />,
+  },
+  {
+    path: "/gameDetail/:RoomId",
+    element: <GameDetailPage />,
   },
 ]);
 
