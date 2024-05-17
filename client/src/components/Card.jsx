@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Card({ room, handleDelete }) {
   return (
     <>
@@ -6,9 +8,7 @@ function Card({ room, handleDelete }) {
         <div className="card-body">
           <h5 className="card-title"></h5>
           <p className="card-text"></p>
-          <a href="#" className="btn btn-primary">
-            Details
-          </a>
+          <Link to={`/gameDetail/${room.id}`} className="btn btn-primary">Detail</Link>
           <button className="btn btn-primary" onClick={handleDelete}>
             Delete
           </button>
